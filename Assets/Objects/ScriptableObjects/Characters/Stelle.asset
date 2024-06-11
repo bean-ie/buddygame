@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123b3a45cb5b08a409f783d88c35f0ff, type: 3}
+  m_Name: Stelle
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  unitWorldSprite: {fileID: 21300000, guid: 14f3cdd3b7b69254594b96844f833f2b, type: 3}
+  unitName: Stelle
+  baseHP: 600
+  baseMP: 150
+  baseTP: 50
+  baseATK: 90
+  baseMATK: 0
+  activeAbilityIDs: 0200000000000000
+  passiveAbilityIDs: 
+  characterFace: {fileID: 21300000, guid: 14f3cdd3b7b69254594b96844f833f2b, type: 3}
+  attackAbilityID: 0

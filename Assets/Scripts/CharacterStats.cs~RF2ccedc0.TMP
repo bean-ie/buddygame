@@ -1,0 +1,32 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
+public class CharacterResourceStat
+{
+    public int baseStat, max, current, flatBonus, multiplierBonus;
+
+    public void AddFlatBonus(int amount)
+    {
+        flatBonus += amount;
+    }
+
+    public void AddMultiplierBonus(int amount)
+    {
+        multiplierBonus += amount;
+    }
+
+    public void ResetBonuses()
+    {
+        flatBonus = 0;
+        multiplierBonus = 0;
+    }
+
+    public void UpdateStat()
+    {
+        max = Mathf.CeilToInt(baseStat * (multiplierBonus / 100f) + flatBonus);
+        current = Mathf.Min(max, current);
+    }
+}

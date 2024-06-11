@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123b3a45cb5b08a409f783d88c35f0ff, type: 3}
+  m_Name: Beanie
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  unitWorldSprite: {fileID: 21300000, guid: d309ab954864a9748a64f229a2fdffdc, type: 3}
+  unitName: beanie
+  baseHP: 1000
+  baseMP: 200
+  baseTP: 100
+  baseATK: 0
+  baseMATK: 0
+  activeAbilityIDs: 0300000005000000
+  passiveAbilityIDs: 01000000
+  characterFace: {fileID: 0}
+  attackAbilityID: 4
