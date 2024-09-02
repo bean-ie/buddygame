@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123b3a45cb5b08a409f783d88c35f0ff, type: 3}
+  m_Name: Nerfcent
+  m_EditorClassIdentifier: 
+  isEnemy: 0
+  unitWorldSprite: {fileID: 21300000, guid: 9533be3816c2d154982aa5a41e22e89b, type: 3}
+  unitName: Nerfcent
+  baseHP: 450
+  baseMP: 5
+  baseTP: 0
+  baseATK: 0
+  baseMATK: 150
+  baseCR: 5
+  baseCDMG: 50
+  baseDEF: 0
+  baseMDEF: 0
+  activeAbilityIDs: 100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b000000
+  passiveAbilityIDs: 04000000
+  characterFace: {fileID: 0}
+  attackAbilityID: 0

@@ -24,9 +24,9 @@ public class ShirokoActive1 : Ability
             {
                 switch (Random.Range(0, 3))
                 {
-                    case 0: unit.ApplyStatus(5, 1); break;
-                    case 1: unit.ApplyStatus(6, 1); break;
-                    case 2: unit.ApplyStatus(7, 1); break;
+                    case 0: unit.ApplyStatus(5, 1, usage.user); break;
+                    case 1: unit.ApplyStatus(6, 1, usage.user); break;
+                    case 2: unit.ApplyStatus(7, 1, usage.user); break;
                 }
             }
         }

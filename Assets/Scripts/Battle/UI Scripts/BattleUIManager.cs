@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class BattleUIManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField] Transform allyInfoUIParent;
     [SerializeField] GameObject allyInfoUIPrefab;
     BattleAllyUI[] allies;
-    BattleUnitUI[] enemies;
+    List<BattleUnitUI> enemies = new List<BattleUnitUI>();
 
     [SerializeField] Button[] actionButtons;
     [SerializeField] AbilitySelectionMenu abilitySelectionMenu;
@@ -20,14 +22,14 @@ public class BattleUIManager : MonoBehaviour
 
     [SerializeField] GameObject floatingTextPrefab;
     [SerializeField] ArrowUI arrow;
+
+    Dictionary<(AppliedStatus, int), GameObject> statusEffectOverlays = new Dictionary<(AppliedStatus, int), GameObject>();
     public void SetupBattle(EncounterSO encounter)
     {
         battlescreenGameObject.SetActive(true);
-        enemies = new BattleUnitUI[encounter.enemies.Length];
         for (int i = 0; i < encounter.enemies.Length; i++)
         {
-            enemies[i] = new BattleUnitUI();
-            enemies[i].SetupBattleSprite(enemyBattleSpriteParent, encounter.enemies[i].unitWorldSprite, enemyBattleSpritePrefab);
+            AddEnemyUIToBattle(encounter.enemies[i]);
         }
 
         allies = new BattleAllyUI[GameManager.instance.teamManager.teamUnits.Length];
@@ -52,6 +54,12 @@ public class BattleUIManager : MonoBehaviour
             ally.ResetBattleSprite();
             ally.ResetAllyInfo();
         }
+    }
+
+    public void AddEnemyUIToBattle(EnemySO enemy)
+    {
+        enemies.Add(new BattleUnitUI());
+        enemies[enemies.Count - 1].SetupBattleSprite(enemyBattleSpriteParent, enemy.unitWorldSprite, enemyBattleSpritePrefab);
     }
 
     public void UpdateAllAllyInfos()
@@ -238,5 +246,32 @@ public class BattleUIManager : MonoBehaviour
     public void ShowArrow()
     {
         arrow.ShowArrow();
+    }
+
+    public void RemoveEnemyUI(int id)
+    {
+        enemies[id - GameManager.instance.teamManager.teamUnits.Length].ResetBattleSprite();
+        enemies.RemoveAt(id - GameManager.instance.teamManager.teamUnits.Length);
+    }
+
+    public void CreateStatusEffectOverlay(AppliedStatus status, int unitIndex)
+    {
+        if (Helper.GetStatus(status.statusID).overlay == null) return;
+        Debug.Log("spawning overlay");
+        GameObject spawnedOverlay = Instantiate(Helper.GetStatus(status.statusID).overlay, GetUnitUIAt(unitIndex).battleImage.transform.position, Quaternion.identity, battlescreenGameObject.transform);
+        Debug.Log("overlay = " + spawnedOverlay);
+        statusEffectOverlays.Add((status, unitIndex), spawnedOverlay);
+    }
+
+    public void DestroyStatusEffectOverlay(AppliedStatus status, int unitIndex)
+    {
+        if (Helper.GetStatus(status.statusID).overlay == null) return;
+        Destroy(statusEffectOverlays[(status, unitIndex)]);
+        statusEffectOverlays.Remove((status, unitIndex));
+    }
+
+    public bool StatusEffectOverlayExists(AppliedStatus status, int unitIndex)
+    {
+        return statusEffectOverlays.ContainsKey((status, unitIndex));
     }
 }

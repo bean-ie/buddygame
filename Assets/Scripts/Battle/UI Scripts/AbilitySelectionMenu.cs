@@ -8,6 +8,7 @@ public class AbilitySelectionMenu : MonoBehaviour
     [SerializeField] GameObject selectionMenuGameObject;
     [SerializeField] Transform gridTransform;
     [SerializeField] GameObject abilityPrefab;
+    [SerializeField] GameObject hoverMessagePrefab;
 
     List<GameObject> members = new List<GameObject>();
 
@@ -36,6 +37,10 @@ public class AbilitySelectionMenu : MonoBehaviour
                     button.interactable = false;
                 }
             } else { Debug.LogError("Ability Member has no Button."); }
+            if (memberGO.TryGetComponent<HoverableUI>(out HoverableUI hoverable))
+            {
+                hoverable.SetupHoverable(ability, hoverMessagePrefab);
+            } else { Debug.LogWarning("Ability Member has no HoverableUI"); }
         }
     }
 

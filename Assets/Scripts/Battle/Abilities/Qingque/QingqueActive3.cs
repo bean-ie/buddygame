@@ -26,7 +26,7 @@ public class QingqueActive3 : Ability
         if (Random.Range(0f, 1f) < 0.5f)
         {
             MPcost = 0;
-            usage.user.ApplyStatus(0, 2);
+            usage.user.ApplyStatus(0, 2, usage.user);
             int stacks = -1;
             foreach (AppliedStatus s in usage.user.appliedStatuses)
             {

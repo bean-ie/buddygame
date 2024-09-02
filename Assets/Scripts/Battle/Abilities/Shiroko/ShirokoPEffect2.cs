@@ -22,7 +22,7 @@ public class ShirokoPEffect2 : PassiveEffect
         }
         if (!hasShirokoBuff && buffsCount > 0)
         {
-            user.ApplyStatus(2, 1);
+            user.ApplyStatus(2, 1, user);
         }
         foreach (AppliedStatus status in user.appliedStatuses)
         {

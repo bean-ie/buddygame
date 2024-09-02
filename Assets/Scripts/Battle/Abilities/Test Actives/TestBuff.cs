@@ -24,8 +24,8 @@ public class TestBuff : Ability
         }
         if (selectedUnit.isEnemy == usage.user.isEnemy)
         {
-            if (!hasBuff) selectedUnit.ApplyStatus(3, 2);
-            else selectedUnit.ApplyStatus(4, 2);
+            if (!hasBuff) selectedUnit.ApplyStatus(3, 2, usage.user);
+            else selectedUnit.ApplyStatus(4, 2, usage.user);
         }
     }
 }

@@ -10,7 +10,7 @@ public class ShirokoPEffect1 : PassiveEffect
         {
             if (unit.isEnemy != user.isEnemy)
             {
-                unit.ApplyStatus(1, 1);
+                unit.ApplyStatus(1, 1, user);
             }
         }
     }

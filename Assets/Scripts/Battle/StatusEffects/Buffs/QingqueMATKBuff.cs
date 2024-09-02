@@ -16,7 +16,6 @@ public class QingqueMATKBuff : StatusEffect
 
     public override void AddBonuses(BattleUnit unit)
     {
-        Debug.Log("adding flat matk");
         unit.MATK.AddFlatBonus(50);
     }
 }

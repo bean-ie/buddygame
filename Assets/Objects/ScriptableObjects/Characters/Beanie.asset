@@ -13,13 +13,17 @@ MonoBehaviour:
   m_Name: Beanie
   m_EditorClassIdentifier: 
   isEnemy: 0
-  unitWorldSprite: {fileID: 21300000, guid: d309ab954864a9748a64f229a2fdffdc, type: 3}
+  unitWorldSprite: {fileID: 21300000, guid: 3bcd9b7b20ef72d4285ea9d77359ac8f, type: 3}
   unitName: beanie
   baseHP: 1000
   baseMP: 200
   baseTP: 100
   baseATK: 0
   baseMATK: 0
+  baseCR: 5
+  baseCDMG: 50
+  baseDEF: 0
+  baseMDEF: 0
   activeAbilityIDs: 0300000005000000
   passiveAbilityIDs: 01000000
   characterFace: {fileID: 0}

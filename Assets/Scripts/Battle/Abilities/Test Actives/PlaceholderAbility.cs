@@ -7,7 +7,6 @@ public class PlaceholderAbility : Ability
     public PlaceholderAbility()
     {
         abilityName = "Placeholder Ability";
-        abilityIcon = Resources.Load<Sprite>("Sprites/peterholder");
         abilityDescription = "Deals damage to an enemy. Fun.";
         abilityType = new AbilityType[3] { AbilityType.active, AbilityType.singletarget, AbilityType.damaging };
         abilityTargetsAlly = false;

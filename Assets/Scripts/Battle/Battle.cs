@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Battle
@@ -47,7 +48,7 @@ public class Battle
     }
 
     public BattleUnit GetUnitAt(int index)
-    {
+    {   
         return units[index];
     }
 
@@ -112,5 +113,25 @@ public class Battle
             fuaQueue.Insert(0, fua);
         else
             fuaQueue.Add(fua);
+    }
+
+    public void RemoveAllDeadEnemies()
+    {
+        int i = 0;
+        foreach (BattleUnit unit in units.ToArray())
+        {
+            if (unit.isEnemy && unit.isDead)
+            {
+                units.Remove(unit);
+                GameManager.instance.battleManager.RemoveEnemyUI(i);
+            }
+            i++;
+        }
+    }
+
+    public void SummonEnemy(EnemySO enemy)
+    {
+        units.Add(new EnemyUnit(enemy));
+        GameManager.instance.battleManager.AddEnemyUI(enemy);
     }
 }

@@ -9,6 +9,7 @@ public class FloatingText : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float xSpeedRange;
     [SerializeField] float lifetime;
+    [SerializeField] Vector2 maxStartPosVariation;
     TMP_Text text;
     Color textColor;
     float xSpeed;
@@ -18,6 +19,7 @@ public class FloatingText : MonoBehaviour
         textColor = text.color;
         xSpeed = Random.Range(-xSpeedRange, xSpeedRange);
         speed *= Random.Range(0.8f, 1.2f);
+        transform.position += new Vector3(Random.Range(-maxStartPosVariation.x, maxStartPosVariation.x), Random.Range(-maxStartPosVariation.y, maxStartPosVariation.y), 0);
     }
 
     void Update()

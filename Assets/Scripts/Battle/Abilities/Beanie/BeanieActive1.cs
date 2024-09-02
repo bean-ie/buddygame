@@ -24,6 +24,7 @@ public class BeanieActive1 : Ability
         }
         for (int i = -1; i <= 1; i+=2)
         {
+            if (usage.selectedUnit + i < 0) continue;
             selectedUnit = usage.battle.GetUnitAt(usage.selectedUnit + i);
             if (selectedUnit.isEnemy == usage.user.isEnemy)
             {

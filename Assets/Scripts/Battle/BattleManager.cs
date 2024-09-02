@@ -70,24 +70,21 @@ public class BattleManager : MonoBehaviour
     IEnumerator NextTurn()
     {
         if (CheckForBattleEnd()) yield return 0;
+        Debug.Log("Current " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
         currentBattle.GetCurrentActingUnit().CountdownStatuses();
         currentBattle.EndTurn();
+        Debug.Log("Switched to " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
 
         CheckForGlobalTurnStart();
 
         if (currentBattle.GetCurrentActingUnit().isDead)
         {
+            Debug.Log("Dead, so we switch to " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
             StartCoroutine(NextTurn());
             yield return 0;
         }
 
-        foreach (int passiveID in currentBattle.GetCurrentActingUnit().GetBaseCharacter().passiveAbilityIDs)
-        {
-            foreach (int effectID in Helper.GetPassiveAbility(passiveID).effectIDs)
-            {
-                Helper.GetEffect(effectID).UserTurnStarts(currentBattle.GetCurrentActingUnit(), currentBattle);
-            }
-        }
+        Helper.ActivateTurnStartPassiveEffects();
 
         yield return StartCoroutine(HandleFuas());
 
@@ -126,7 +123,6 @@ public class BattleManager : MonoBehaviour
                 selectedUnit = Random.Range(0, teamSize);
             }
             currentAbilityUsage.selectedUnit = selectedUnit;
-            Debug.Log("selected unit: " + selectedUnit + ", team size: " + teamSize);
         } 
         else
         {
@@ -210,6 +206,7 @@ public class BattleManager : MonoBehaviour
         } 
         else
         {
+            Debug.Log("Going to next turn");
             StartCoroutine(NextTurn());
         }
     }
@@ -325,5 +322,28 @@ public class BattleManager : MonoBehaviour
     {
         uiManager.UpdateAllAllyInfos();
         UpdateAllSpritesDeathState();
+        currentBattle.RemoveAllDeadEnemies();
+    }
+
+    public void RemoveEnemyUI(int id)
+    {
+        uiManager.RemoveEnemyUI(id);
+    }
+
+    public void AddEnemyUI(EnemySO enemy)
+    {
+        uiManager.AddEnemyUIToBattle(enemy);
+    }
+
+    public void UpdateStatusEffectOverlay(AppliedStatus status, int unitIndex)
+    {
+        if (!uiManager.StatusEffectOverlayExists(status, unitIndex) && status.stacks > 0 && status.remainingTurnDuration != 0)
+        {
+            uiManager.CreateStatusEffectOverlay(status, unitIndex);
+        }
+        else if (status.stacks <= 0 || status.remainingTurnDuration <= 0)
+        {
+            uiManager.DestroyStatusEffectOverlay(status, unitIndex);
+        }
     }
 }

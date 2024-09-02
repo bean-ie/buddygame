@@ -5,8 +5,8 @@ using UnityEngine;
 
 public abstract class Ability : AbilityBase
 {
-    public bool abilityTargetsAlly;
-    public bool noTarget;
+    public bool abilityTargetsAlly = false;
+    public bool noTarget = false;
     public AbilityAnimationTarget abilityAnimationTarget = AbilityAnimationTarget.noMove;
     public int MPcost, TPcost, TPgain;
     public bool dontEndTurn = false;

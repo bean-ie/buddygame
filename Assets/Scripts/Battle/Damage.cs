@@ -9,25 +9,15 @@ public class Damage
     public bool crit = false;
     public int bonusAmount = 0;
 
-    public Damage(int _amount, BattleUnit _source)
-    {
-        amount = _amount;
-        source = _source;
-        if (Random.Range(0, 101) < source.CR.current)
-        {
-            crit = true;
-            bonusAmount += _amount * source.CDMG.current / 100;
-        }
-    }
-
-    public Damage(float _amount, BattleUnit _source)
+    public Damage(float _amount, BattleUnit _source, int bonusCDMG = 0, int bonusCR = 0, int bonusDMG = 0)
     {
         amount = Mathf.CeilToInt(_amount);
         source = _source;
-        if (Random.Range(0, 101) < source.CR.current)
+        if (Random.Range(0, 101) < source.CR.current + bonusCR)
         {
             crit = true;
-            bonusAmount += Mathf.CeilToInt(_amount * source.CDMG.current / 100f);
+            bonusAmount += Mathf.CeilToInt(_amount * (source.CDMG.current + bonusCDMG) / 100f);
+            bonusAmount += bonusDMG;
         }
     }
 }

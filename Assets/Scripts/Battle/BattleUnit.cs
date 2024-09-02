@@ -20,6 +20,7 @@ public abstract class BattleUnit
     public UnitStat MDEF = new UnitStat();
     public UnitStat CR = new UnitStat();
     public UnitStat CDMG = new UnitStat();
+    public UnitStat DEFIgnore = new UnitStat();
 
     public bool isDead = false;
     public List<AppliedStatus> appliedStatuses = new List<AppliedStatus>();
@@ -44,6 +45,8 @@ public abstract class BattleUnit
         CR.UpdateStat();
         CDMG.baseStat = GetBaseCharacter().baseCDMG;
         CDMG.UpdateStat();
+        DEFIgnore.baseStat = 0;
+        DEFIgnore.UpdateStat();
     }
 
     public void DealDamage(Damage damage)
@@ -105,7 +108,7 @@ public abstract class BattleUnit
         GameManager.instance.battleManager.FlashBattleSprite(this, damageColor, 0f, 0f, 1f);
     }
 
-    public void ApplyStatus(int id, int turnDuration, bool refreshDuration = true)
+    public void ApplyStatus(int id, int turnDuration, BattleUnit applier, bool refreshDuration = true)
     {
         Color textColor;
         switch (Helper.GetStatus(id).statusType)
@@ -131,10 +134,11 @@ public abstract class BattleUnit
                 return;
             }
         }
-        AppliedStatus status = new AppliedStatus(id, turnDuration);
+        AppliedStatus status = new AppliedStatus(id, turnDuration, applier);
         appliedStatuses.Add(status);
         UpdateStatuses();
         GameManager.instance.battleManager.SpawnFloatingTextOnUnit(this, Helper.GetStatus(id).statusName, textColor);
+        GameManager.instance.battleManager.UpdateStatusEffectOverlay(status, GameManager.instance.battleManager.currentBattle.GetIndexOf(this));
     }
 
     public void UpdateStatuses(bool callPassives = true)
@@ -149,12 +153,14 @@ public abstract class BattleUnit
         MDEF.ResetBonuses();
         CR.ResetBonuses();
         CDMG.ResetBonuses();
+        DEFIgnore.ResetBonuses();
         foreach (AppliedStatus status in appliedStatuses)
         {
             for (int i = 0; i < status.stacks; i++)
             {
                 Helper.GetStatus(status.statusID).AddBonuses(this);
             }
+            GameManager.instance.battleManager.UpdateStatusEffectOverlay(status, GameManager.instance.battleManager.currentBattle.GetIndexOf(this));
         }
         HP.UpdateStat();
         MP.UpdateStat();
@@ -165,6 +171,7 @@ public abstract class BattleUnit
         MDEF.UpdateStat();
         CR.UpdateStat();
         CDMG.UpdateStat();
+        DEFIgnore.UpdateStat();
         if (!callPassives) return;
         foreach (int passiveID in GetBaseCharacter().passiveAbilityIDs)
         {
@@ -192,6 +199,15 @@ public abstract class BattleUnit
             appliedStatuses.Remove(status);
         }
         else return;
+    }
+
+    public bool HasStatus(int id)
+    {
+        foreach (AppliedStatus status in appliedStatuses)
+        {
+            if (status.statusID == id) return true;
+        }
+        return false;
     }
 
     public UnitSO GetBaseCharacter()

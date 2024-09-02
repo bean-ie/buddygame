@@ -222,7 +222,7 @@ MonoBehaviour:
       _dynamic: 0
   entry: 0
   exit: 0
-  encounter: {fileID: 11400000, guid: b2fc3f1a07ac1dd4091edfbf39987cde, type: 2}
+  encounter: {fileID: 11400000, guid: ccca3514c89fb4942bb0967c56b67543, type: 2}
 --- !u!114 &1938440329832552458
 MonoBehaviour:
   m_ObjectHideFlags: 0

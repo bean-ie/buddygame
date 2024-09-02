@@ -2340,6 +2340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2e2d61ae9a4ea4d9d1ebcfea0ea978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  summonnableEnemies:
+  - {fileID: 11400000, guid: 09319b76ca8d89b4b9d90cd64ae2aeca, type: 2}
 --- !u!4 &739092833
 Transform:
   m_ObjectHideFlags: 0
@@ -2630,6 +2632,7 @@ MonoBehaviour:
   selectionMenuGameObject: {fileID: 510191898}
   gridTransform: {fileID: 833914817}
   abilityPrefab: {fileID: 2929510873938078516, guid: da2d74267ec24c84b99c2fe6e8a6f0eb, type: 3}
+  hoverMessagePrefab: {fileID: 7941329300179537159, guid: 6ef16938fa0a68b4384cfda76a278850, type: 3}
 --- !u!1 &824254745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7033,7 +7036,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
+  m_CellSize: {x: 200, y: 100}
   m_Spacing: {x: 0, y: 25}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -7084,7 +7087,7 @@ MonoBehaviour:
   teamBaseCharacters:
   - {fileID: 11400000, guid: f9ed9fdaffcde404a9a2db4fdb95cdcd, type: 2}
   - {fileID: 11400000, guid: 91bb0035e622ee74c856196e9067d51b, type: 2}
-  - {fileID: 11400000, guid: b5c75e8cabf5e5741b3089f0e808010c, type: 2}
+  - {fileID: 11400000, guid: e383f43c16db28649b2ffa0f9a98db43, type: 2}
   - {fileID: 11400000, guid: 4b1ddba9bd757ca43a485bac9d5b6746, type: 2}
   teamUnits: []
 --- !u!1 &2024390794

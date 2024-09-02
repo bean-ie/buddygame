@@ -8,8 +8,9 @@ public abstract class StatusEffect
     public Sprite statusIcon;
     public StatusType statusType;
     public int[] statusEffectIDs;
+    public GameObject overlay;
 
-    public bool stackable = true;
+    public bool stackable = false;
     public int maxStacks = 1;
     public bool refreshable = true;
     public bool hidden = false;
