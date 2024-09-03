@@ -188,6 +188,7 @@ public abstract class BattleUnit
         {
             if (!Helper.GetStatus(status.statusID).permanent)
                 status.remainingTurnDuration--;
+            GameManager.instance.battleManager.UpdateStatusEffectOverlay(status, GameManager.instance.battleManager.currentBattle.GetIndexOf(this));
         }
         UpdateStatuses();
     }
@@ -207,6 +208,12 @@ public abstract class BattleUnit
         {
             if (status.statusID == id) return true;
         }
+        return false;
+    }
+
+    public bool HasSkipTurnStatus()
+    {
+        if (appliedStatuses.Any(x => Helper.GetStatus(x.statusID).skipTurn)) return true;
         return false;
     }
 

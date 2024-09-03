@@ -17,6 +17,8 @@ public abstract class StatusEffect
     public bool permanent = false;
     public bool removable = true;
 
+    public bool skipTurn = false;
+
     public virtual void AddBonuses(BattleUnit unit) { }
 }
 

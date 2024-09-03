@@ -67,14 +67,20 @@ public class BattleManager : MonoBehaviour
         return false;
     }
 
+    int previousUnit;
+
     IEnumerator NextTurn()
     {
+        Debug.Log("going to next turn");
         if (CheckForBattleEnd()) yield return 0;
-        Debug.Log("Current " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
         currentBattle.GetCurrentActingUnit().CountdownStatuses();
+        currentBattle.GetCurrentActingUnit().UpdateStatuses();
         currentBattle.EndTurn();
-        Debug.Log("Switched to " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
+        if (currentBattle.GetCurrentActingUnitIndex() == previousUnit) Debug.LogError("SAME UNIT!!!!!!");
+        previousUnit = currentBattle.GetCurrentActingUnitIndex();
+        yield return new WaitForEndOfFrame();
 
+        uiManager.MoveArrowToUnit(currentBattle.GetCurrentActingUnitIndex());
         CheckForGlobalTurnStart();
 
         if (currentBattle.GetCurrentActingUnit().isDead)
@@ -88,6 +94,14 @@ public class BattleManager : MonoBehaviour
 
         yield return StartCoroutine(HandleFuas());
 
+        if (currentBattle.GetCurrentActingUnit().HasSkipTurnStatus())
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log("Switching from " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName + " to " + currentBattle.GetUnitAt((currentBattle.GetCurrentActingUnitIndex() + 1) % currentBattle.GetAllUnits().Count).GetBaseCharacter().unitName);
+            StartCoroutine(NextTurn());
+            yield return 0;
+        }
+
         if (currentBattle.GetCurrentActingUnit().isEnemy)
         {
             uiManager.DisableActionButtons();
@@ -98,7 +112,6 @@ public class BattleManager : MonoBehaviour
             //uiManager.MoveSpriteForward(currentBattle.GetCurrentActingUnitIndex(), 1);
             uiManager.EnableActionButtons();
         }
-        uiManager.MoveArrowToUnit(currentBattle.GetCurrentActingUnitIndex());
         UpdateAllUI();
         currentAbilityUsage = new AbilityUsage();
         currentAbilityUsage.battle = currentBattle;
@@ -139,7 +152,8 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(NextTurn());
+            Debug.Log("enemy turn over");
+            yield return StartCoroutine(NextTurn());
         }
     }
 
@@ -206,8 +220,8 @@ public class BattleManager : MonoBehaviour
         } 
         else
         {
-            Debug.Log("Going to next turn");
             StartCoroutine(NextTurn());
+            Debug.Log("player turn over");
         }
     }
 

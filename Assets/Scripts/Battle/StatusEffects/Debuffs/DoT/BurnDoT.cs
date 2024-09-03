@@ -11,7 +11,6 @@ public class BurnDoT : StatusEffect
             "and also increases damage taken of all affected targets.";
         statusIcon = Resources.Load<Sprite>("Sprites/Status Effects/Icon_Burn");
         overlay = Resources.Load<GameObject>("Prefabs/Overlays/BurnOverlay");
-        Debug.Log(overlay);
         statusType = StatusType.debuff;
         statusEffectIDs = new int[] { 5 };
     }
