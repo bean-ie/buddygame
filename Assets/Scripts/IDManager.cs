@@ -42,7 +42,8 @@ public class IDManager : MonoBehaviour
             new NerfcentSpell9(),
             new NerfcentSpell10(), // 25
             new NerfcentSpell11(),
-            new NerfcentSpell12()
+            new NerfcentSpell12(),
+            new TestFreeze()    
         };
 
         passives = new PassiveAbility[]

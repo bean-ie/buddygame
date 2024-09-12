@@ -24,7 +24,7 @@ MonoBehaviour:
   baseCDMG: 1000
   baseDEF: 0
   baseMDEF: 0
-  activeAbilityIDs: 0e000000020000000f000000
+  activeAbilityIDs: 0e000000020000000f0000000f0000001c0000000a000000
   passiveAbilityIDs: 
   characterFace: {fileID: 0}
   attackAbilityID: 0
