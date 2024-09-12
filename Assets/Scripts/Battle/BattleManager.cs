@@ -87,20 +87,26 @@ public class BattleManager : MonoBehaviour
         {
             Debug.Log("Dead, so we switch to " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
             StartCoroutine(NextTurn());
-            yield return 0;
+            yield break;
         }
 
         Helper.ActivateTurnStartPassiveEffects();
 
-        yield return StartCoroutine(HandleFuas());
+        yield return HandleFuas();
+
+        Debug.Log("Current turn: " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName);
 
         if (currentBattle.GetCurrentActingUnit().HasSkipTurnStatus())
         {
             yield return new WaitForSeconds(1f);
             Debug.Log("Switching from " + currentBattle.GetCurrentActingUnit().GetBaseCharacter().unitName + " to " + currentBattle.GetUnitAt((currentBattle.GetCurrentActingUnitIndex() + 1) % currentBattle.GetAllUnits().Count).GetBaseCharacter().unitName);
-            StartCoroutine(NextTurn());
-            yield return 0;
+            yield return NextTurn();
+            yield break;
         }
+
+        UpdateAllUI();
+        currentAbilityUsage = new AbilityUsage();
+        currentAbilityUsage.battle = currentBattle;
 
         if (currentBattle.GetCurrentActingUnit().isEnemy)
         {
@@ -112,9 +118,6 @@ public class BattleManager : MonoBehaviour
             //uiManager.MoveSpriteForward(currentBattle.GetCurrentActingUnitIndex(), 1);
             uiManager.EnableActionButtons();
         }
-        UpdateAllUI();
-        currentAbilityUsage = new AbilityUsage();
-        currentAbilityUsage.battle = currentBattle;
     }
 
     Ability currentAbility;
@@ -122,6 +125,11 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator HandleEnemyAction()
     {
+        if (!currentBattle.GetCurrentActingUnit().isEnemy)
+        {
+            Debug.LogError("Not an enemy?");
+            yield break;
+        }
         yield return new WaitForSeconds(0.5f);
         EnemyUnit currentActingEnemy = (EnemyUnit)currentBattle.GetCurrentActingUnit();
         currentAbilityUsage.user = currentActingEnemy;
@@ -144,7 +152,7 @@ public class BattleManager : MonoBehaviour
         currentAbility.UseAbility(currentAbilityUsage);
         UpdateAllUI();
         yield return new WaitForSeconds(1f);
-        yield return StartCoroutine(HandleFuas());
+        yield return HandleFuas();
         if (currentAbility.dontEndTurn)
         {
             if (!CheckForBattleEnd())
@@ -153,7 +161,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             Debug.Log("enemy turn over");
-            yield return StartCoroutine(NextTurn());
+            yield return NextTurn();
         }
     }
 

@@ -121,7 +121,7 @@ public class NerfcentSpell6 : BaseNerfcentSpell
     public override void UseAbility(AbilityUsage usage)
     {
         usage.battle.GetUnitAt(usage.selectedUnit).DealDamage(new Damage(usage.user.MATK.current * 1.8f, usage.user));
-        if (Random.Range(0, 100) <= 70) usage.battle.GetUnitAt(usage.selectedUnit).ApplyStatus(14, 1, usage.user);
+        if (Random.Range(0, 100) <= 8) usage.battle.GetUnitAt(usage.selectedUnit).ApplyStatus(14, 1, usage.user);
     }
 }
 
